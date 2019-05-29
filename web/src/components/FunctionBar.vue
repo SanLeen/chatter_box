@@ -59,6 +59,7 @@
         }
 
         > .avatar {
+            cursor: pointer;
             width: $spacing-normal*8;
             height: $spacing-normal*8;
             border-radius: 50%;
