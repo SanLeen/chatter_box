@@ -109,6 +109,7 @@
                             justify-content: flex-start;
 
                             > .text {
+                                word-break: break-all;
                                 border-radius: 2px;
                                 background: $color-gray;
                                 padding: $spacing-normal*1.5;
