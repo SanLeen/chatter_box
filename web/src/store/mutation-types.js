@@ -1,0 +1,4 @@
+export const SET_USER_INFO = 'SET_USER_INFO';
+export const SET_ONLINE_COUNT = 'SET_ONLINE_COUNT';
+export const PUSH_2_MSG_LIST = 'PUSH_2_MSG_LIST';
+export const SET_SERVER_CONNECTED = 'SET_SERVER_CONNECTED';

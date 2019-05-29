@@ -1,0 +1,45 @@
+$color-yellow: #F1CD31;
+$color-black: #111111;
+$color-white: #EFEFEF;
+$color-gray: #303030;
+
+$spacing-normal: 0.3em;
+
+//滚动条样式
+::-webkit-scrollbar {
+  width: 0.3em;
+  height: 0.3em;
+
+  &-thumb {
+    background-color: #8F6D27;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.copy-unable {
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.auto-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; /*解决iOS终端滑动不顺畅*/
+}
+
+/*消除input框的默认样式*/
+input, button, select, textarea {
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
