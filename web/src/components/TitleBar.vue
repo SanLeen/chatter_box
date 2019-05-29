@@ -34,13 +34,13 @@
 
             &.disconnected > .coin {
                 border-color: red;
-                animation: spin 1.5s ease-in-out infinite;
+                animation: spin 1s ease-in-out infinite;
             }
 
             > .coin {
                 cursor: pointer;
                 @extend .copy-unable;
-                color: $color-white;
+                color: $color-shallow-gray;
                 background: rgba(17, 17, 17, 0.8);
                 margin-top: $spacing-normal;
                 width: $spacing-normal*5;
@@ -51,12 +51,6 @@
                 align-items: center;
                 justify-content: center;
             }
-        }
-    }
-
-    @keyframes spin {
-        to {
-            transform: rotateY(540deg);
         }
     }
 </style>

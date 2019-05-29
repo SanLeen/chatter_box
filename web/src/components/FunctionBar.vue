@@ -3,7 +3,7 @@
         <form id="typewriter" action="javascript:return true">
             <input type="text" v-model="writeContent" @keypress="typewriterPress">
         </form>
-        <div class="avatar">{{$store.state.userInfo.avatar}}</div>
+        <div class="avatar" @click="sendMessage">{{$store.state.userInfo.avatar}}</div>
     </div>
 </template>
 
@@ -18,12 +18,15 @@
         methods: {
             typewriterPress($event) {
                 if ($event.key === 'Enter') {
-                    if (this.writeContent.trim()) {
-                        this.$socketServer.webSocket.send(this.writeContent.trim());
-                        this.writeContent = '';
-                    }
+                    this.sendMessage();
                 }
                 return true;
+            },
+            sendMessage() {
+                if (this.writeContent.trim()) {
+                    this.$socketServer.webSocket.send(this.writeContent.trim());
+                    this.writeContent = '';
+                }
             }
         }
     }
@@ -65,6 +68,10 @@
             justify-content: center;
             align-items: center;
             @extend .copy-unable;
+
+            &:hover {
+                animation: spin 1.5s ease-in-out infinite;
+            }
         }
     }
 </style>

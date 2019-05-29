@@ -2,6 +2,7 @@ $color-yellow: #F1CD31;
 $color-black: #111111;
 $color-white: #EFEFEF;
 $color-gray: #303030;
+$color-shallow-gray: #555555;
 
 $spacing-normal: 0.3em;
 
@@ -42,4 +43,10 @@ input, button, select, textarea {
   outline: none;
   -webkit-appearance: none;
   border-radius: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotateY(360deg);
+  }
 }

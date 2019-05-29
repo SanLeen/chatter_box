@@ -122,8 +122,7 @@
                 }
 
                 > .notification {
-                    color: $color-white;
-                    opacity: 0.3;
+                    color: $color-shallow-gray;
                     font-size: 0.8em;
                     text-align: center;
                 }
@@ -133,8 +132,7 @@
                 margin: $spacing-normal*0.6 0 $spacing-normal 0;
 
                 > .time {
-                    color: $color-yellow;
-                    opacity: 0.3;
+                    color: $color-shallow-gray;
                     font-size: 0.8em;
                     text-align: center;
                 }

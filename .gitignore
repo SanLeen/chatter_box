@@ -33,6 +33,7 @@ server/src/main/resources/static/
 web/.DS_Store
 web/node_modules
 web/dist
+web/package-lock.json
 # local env files
 web/.env.local
 web/.env.*.local
