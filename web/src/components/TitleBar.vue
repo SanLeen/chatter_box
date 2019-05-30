@@ -26,15 +26,13 @@
         justify-content: center;
 
         > .state-dot {
-            perspective: 120px;
-
             &.connected > .coin {
                 border-color: green;
             }
 
             &.disconnected > .coin {
                 border-color: red;
-                animation: spin 1s ease-in-out infinite;
+                animation: spin 5s ease-in-out infinite;
             }
 
             > .coin {

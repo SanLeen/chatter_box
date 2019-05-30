@@ -14,6 +14,23 @@
     export default {
         name: 'app',
         components: {FunctionBar, Stage, TitleBar},
+        mounted() {
+            document.addEventListener('paste', $event => {
+                if (!($event.clipboardData && $event.clipboardData.items)) {
+                    return;
+                }
+                for (let item of $event.clipboardData.items) {
+                    if (item.kind === "file") {
+                        let reader = new FileReader();
+                        reader.onload = loadEvent => {
+                            let blob = loadEvent.target.result;
+                            this.$socketServer.webSocket.send(blob);
+                        };
+                        reader.readAsArrayBuffer(item.getAsFile());
+                    }
+                }
+            });
+        }
     }
 </script>
 

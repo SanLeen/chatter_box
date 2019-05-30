@@ -2,12 +2,13 @@ package leensamziv.chatterbox.server;
 
 import com.google.gson.Gson;
 import leensamziv.chatterbox.bean.ChatObject;
+import leensamziv.chatterbox.bean.SelfInfo;
 import leensamziv.chatterbox.bean.SocketMessageObject;
 import leensamziv.chatterbox.bean.SocketMessageType;
-import leensamziv.chatterbox.bean.SelfInfo;
 import leensamziv.chatterbox.util.AvatarUtil;
 import leensamziv.chatterbox.util.WebsocketUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -15,7 +16,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -49,13 +52,7 @@ public class WebSocketServer {
 
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-        System.out.printf(
-                "%d [%s/%s/%s]\n",
-                new Date().getTime(),
-                this.selfInfo.getHostAddress(),
-                this.selfInfo.getAvatar(),
-                message
-        );
+        this.logEvent(message);
         this.sendGroupMessage(
                 new SocketMessageObject(
                         SocketMessageType.MESSAGE,
@@ -65,8 +62,25 @@ public class WebSocketServer {
         );
     }
 
+    @OnMessage
+    public void onMessage(ByteBuffer message, Session session) throws IOException {
+        String md5 = DigestUtils.md5DigestAsHex(message.array());
+        //文件预告信息
+        String fileNotice = new Gson().toJson(
+                new SocketMessageObject(
+                        SocketMessageType.BINARY_NOTICE,
+                        new ChatObject(this.selfInfo, md5)
+                )
+        );
+        this.logEvent(md5);
+        for (WebSocketServer item : webSocketSet) {
+            item.sendMessage(fileNotice);
+            item.sendBinaryMessage(message);
+        }
+    }
+
     /**
-     * 维护服务
+     * 维护人员服务
      *
      * @param isJoin 是否为加入
      */
@@ -139,9 +153,24 @@ public class WebSocketServer {
         }
     }
 
+    /**
+     * 事件日志打印
+     *
+     * @param message 信息
+     */
+    public void logEvent(String message) {
+        System.out.printf(
+                "%d [%s/%s/%s]\n",
+                new Date().getTime(),
+                this.selfInfo.getHostAddress(),
+                this.selfInfo.getAvatar(),
+                message
+        );
+    }
+
 
     /**
-     * 群发消息
+     * 群发文本消息
      *
      * @param message      消息体
      * @param exceptUserId 不发送消息用户id
@@ -157,6 +186,10 @@ public class WebSocketServer {
 
     public void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
+    }
+
+    public void sendBinaryMessage(ByteBuffer message) throws IOException {
+        this.session.getBasicRemote().sendBinary(message);
     }
 
     public static synchronized int getOnlineCount() {

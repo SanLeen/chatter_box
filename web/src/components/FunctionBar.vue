@@ -1,5 +1,6 @@
 <template>
     <div id="function-bar">
+        <div class="avatar" @click="sendPicture">P</div>
         <form id="typewriter" action="javascript:return true">
             <input type="text" v-model="writeContent" @keypress="typewriterPress">
         </form>
@@ -23,10 +24,36 @@
                 return true;
             },
             sendMessage() {
+                if (!this.$socketServer.isState(WebSocket.OPEN)) {
+                    return;
+                }
                 if (this.writeContent.trim()) {
                     this.$socketServer.webSocket.send(this.writeContent.trim());
                     this.writeContent = '';
                 }
+            },
+            sendPicture() {
+                if (!this.$socketServer.isState(WebSocket.OPEN)) {
+                    return;
+                }
+                let input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.style.display = 'none';
+                input.onchange = $event => {
+                    if ($event.target.files.length > 0) {
+                        let file = $event.target.files[0];
+                        let reader = new FileReader();
+                        reader.onload = loadEvent => {
+                            let blob = loadEvent.target.result;
+                            this.$socketServer.webSocket.send(blob);
+                            input.parentNode.removeChild(input);
+                        };
+                        reader.readAsArrayBuffer(file);
+                    }
+                };
+                document.body.appendChild(input);
+                input.click();
             }
         }
     }
@@ -71,7 +98,7 @@
             @extend .copy-unable;
 
             &:hover {
-                animation: spin 1.5s ease-in-out infinite;
+                animation: spin 1s ease-in-out;
             }
         }
     }

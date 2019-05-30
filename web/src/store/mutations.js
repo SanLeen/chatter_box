@@ -16,5 +16,15 @@ const mutations = {
     [types.SET_SERVER_CONNECTED](state, data) {
         state.serverConnected = data
     },
+    [types.PUSH_BINARY_2_MSG](state, data) {
+        let listLength = state.msgList.length;
+        for (let i = listLength - 1; i >= 0; i--) {
+            if (state.msgList[i].content === data.code) {
+                state.msgList[i].binary = data.binary;
+                state.msgList[i].loadDone = true;
+                break;
+            }
+        }
+    },
 };
 export default mutations
