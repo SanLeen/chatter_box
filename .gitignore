@@ -25,6 +25,7 @@
 .vscode/
 
 ### server ###
+*.yml
 server/target/
 server/src/main/resources/static/
 !server/.mvn/wrapper/maven-wrapper.jar
