@@ -75,7 +75,7 @@
                 width: 100%;
                 font-size: 1em;
                 color: $color-white;
-                padding: $spacing-normal;
+                padding: $spacing-normal $spacing-normal 0 $spacing-normal;
                 background: transparent;
                 border: none;
                 margin-bottom: $spacing-normal;
