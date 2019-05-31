@@ -15,6 +15,7 @@
         name: 'app',
         components: {FunctionBar, Stage, TitleBar},
         mounted() {
+            // 粘贴事件自动发送图片
             document.addEventListener('paste', $event => {
                 if (!($event.clipboardData && $event.clipboardData.items)) {
                     return;
