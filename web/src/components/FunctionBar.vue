@@ -62,7 +62,7 @@
 <style lang="scss" scoped>
     #function-bar {
         color: $color-black;
-        background: $color-gray;
+        //background: $color-gray;
         display: flex;
 
         > #typewriter {
