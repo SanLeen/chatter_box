@@ -28,11 +28,7 @@
         methods: {
             scrollIntoBottom() {
                 let stageElement = document.getElementById('stage');
-                if (stageElement.childElementCount > 0) {
-                    stageElement.children[stageElement.childElementCount - 1].scrollIntoView(
-                        {behavior: 'smooth', block: 'start'}
-                    )
-                }
+                stageElement.lastChild.scrollIntoView({behavior: 'smooth', block: 'start'});
             }
         }
     }
