@@ -1,10 +1,10 @@
 <template>
     <div id="function-bar">
-        <div class="avatar" @click="sendPicture">P</div>
+        <div class="avatar press-effect" @click="sendPicture">P</div>
         <form id="typewriter" action="javascript:return true">
             <input type="text" v-model="writeContent" @keypress="typewriterPress">
         </form>
-        <div class="avatar" @click="sendMessage">{{$store.state.userInfo.avatar}}</div>
+        <div class="avatar press-effect" @click="sendMessage">{{$store.state.userInfo.avatar}}</div>
     </div>
 </template>
 
@@ -78,6 +78,7 @@
                 padding: $spacing-normal;
                 background: transparent;
                 border: none;
+                margin-bottom: $spacing-normal;
                 border-bottom: 2px $color-yellow solid;
 
                 &:focus {
@@ -87,8 +88,8 @@
 
         > .avatar {
             cursor: pointer;
-            width: $spacing-normal*8;
-            height: $spacing-normal*8;
+            width: $spacing-normal*7;
+            height: $spacing-normal*7;
             border-radius: 50%;
             background: $color-yellow;
             margin: $spacing-normal;
@@ -96,10 +97,6 @@
             justify-content: center;
             align-items: center;
             @extend .copy-unable;
-
-            &:hover {
-                animation: spin 1s ease-in-out;
-            }
         }
     }
 </style>

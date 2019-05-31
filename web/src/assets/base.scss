@@ -53,3 +53,21 @@ input, button, select, textarea {
     transform: translateZ(-100px) rotateX(360deg) rotateY(360deg);
   }
 }
+
+.press-effect {
+  box-sizing: border-box;
+  border: 0 $color-black solid;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    animation: none;
+    border-width: 1px;
+    transform: scale(0.95);
+  }
+
+  &:active {
+    font-weight: bold;
+    border-width: 3px;
+    transform: scale(0.9);
+  }
+}
