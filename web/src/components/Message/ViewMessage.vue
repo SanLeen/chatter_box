@@ -1,7 +1,7 @@
 <template>
     <div class="message"
          :style="{flexDirection:item.self?'row-reverse':'row'}">
-        <div class="avatar">{{item.avatar}}</div>
+        <div class="avatar" :class="{'flip-horizontal':!item.self}">{{item.avatar}}</div>
         <div class="divider"></div>
         <div class="content">
             <div class="host-address" :style="{textAlign:item.self?'right':'left'}">
