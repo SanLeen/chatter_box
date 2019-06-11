@@ -1,6 +1,6 @@
 # Chatter Box
 
-[PREVIEW ONLINE](http://leenwong.cn:6969 "leenwong.cn:6969")
+[PREVIEW ONLINE](http://chat.leenwong.cn "chat.leenwong.cn")
 
 ![](PREVIEW.gif)
 
