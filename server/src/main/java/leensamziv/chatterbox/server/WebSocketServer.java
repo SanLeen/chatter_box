@@ -5,15 +5,13 @@ import leensamziv.chatterbox.bean.ChatObject;
 import leensamziv.chatterbox.bean.SelfInfo;
 import leensamziv.chatterbox.bean.SocketMessageObject;
 import leensamziv.chatterbox.bean.SocketMessageType;
+import leensamziv.chatterbox.config.ServerEndpointConfigurator;
 import leensamziv.chatterbox.util.AvatarUtil;
 import leensamziv.chatterbox.util.WebsocketUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -22,7 +20,7 @@ import java.util.Date;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @Component
-@ServerEndpoint("/socketServer")
+@ServerEndpoint(value = "/socketServer", configurator = ServerEndpointConfigurator.class)
 public class WebSocketServer {
     private static int onlineCount = 0;
 
@@ -32,14 +30,18 @@ public class WebSocketServer {
     private SelfInfo selfInfo;
 
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(Session session, EndpointConfig endpointConfig) {
         this.session = session;
-        InetAddress inetAddress = WebsocketUtil.getRemoteAddress(session).getAddress();
+        Object hostAddress = endpointConfig.getUserProperties().get(ServerEndpointConfigurator.IP_HEADER);
+        if (hostAddress == null) {
+            InetAddress inetAddress = WebsocketUtil.getRemoteAddress(session).getAddress();
+            hostAddress = inetAddress.getHostAddress();
+        }
         this.selfInfo = new SelfInfo(
                 session.getId(),
                 AvatarUtil.getRandom(),
-                inetAddress.getHostAddress(),
-                inetAddress.getHostName()
+                hostAddress.toString(),
+                "unknown"
         );
         maintainServer(true);
     }
