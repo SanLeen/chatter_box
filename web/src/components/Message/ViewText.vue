@@ -1,5 +1,5 @@
 <template>
-    <div class="message"
+    <div class="text-message"
          :style="{flexDirection:item.self?'row-reverse':'row'}">
         <div class="avatar" :class="{'flip-horizontal':!item.self}">{{item.avatar}}</div>
         <div class="divider"></div>
@@ -8,7 +8,11 @@
                 {{item.hostAddress}}
             </div>
             <div class="message-stand" :style="{flexDirection:item.self?'row-reverse':'row'}">
-                <div v-if="item.flag === messageFlag.MESSAGE" class="text">{{item.content}}</div>
+                <div v-if="item.flag === messageFlag.MESSAGE" class="text"
+                     :class="{'self-text':item.self}"
+                >
+                    {{item.content}}
+                </div>
                 <div v-if="item.flag === messageFlag.BINARY_PIC">
                     <img v-if="item.loadDone" :src="item.binary">
                     <div v-else class="binary-loading"></div>
@@ -24,7 +28,7 @@
     import MessageFlag from "../../util/MessageFlag";
 
     export default {
-        name: "ViewMessage",
+        name: "ViewText",
         props: {
             item: Object
         },
@@ -37,7 +41,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .message {
+    .text-message {
         display: flex;
 
         > .avatar {
@@ -76,6 +80,12 @@
                     border-radius: 2px;
                     background: $color-gray;
                     padding: $spacing-normal*1.5;
+                    font-weight: normal;
+
+                    &.self-text {
+                        color: $color-black;
+                        background: $color-yellow;
+                    }
                 }
 
                 img {

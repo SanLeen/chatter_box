@@ -1,10 +1,10 @@
 <template>
     <div class="item">
         <div class="top">
-            <slot></slot>
+            <div class="time">{{time | simpleYearDayDispLay}}</div>
         </div>
         <div class="bottom">
-            <div class="time">{{new Date(time).toLocaleString()}}</div>
+            <slot></slot>
         </div>
     </div>
 </template>
@@ -22,19 +22,20 @@
     .item {
         display: flex;
         flex-direction: column;
-        padding: $spacing-normal*1.5 $spacing-normal;
+        padding: $spacing-normal;
+        padding-bottom: $spacing-big;
 
         > .top {
-        }
-
-        > .bottom {
-            margin: $spacing-normal*0.6 0 $spacing-normal 0;
+            margin: $spacing-normal 0;
 
             > .time {
                 color: $color-shallow-gray;
                 font-size: 0.8em;
                 text-align: center;
             }
+        }
+
+        > .bottom {
         }
     }
 </style>

@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import store from '../store'
 import {
     PUSH_2_MSG_LIST,
@@ -21,7 +22,9 @@ export default class SocketServer {
      * 初始化WebSocket服务
      */
     initWebSocket() {
-        this.webSocket = new WebSocket(`ws://${document.location.host}/socketServer`);
+        const local = document.location.hostname + ':8080';
+        const url = 'ws://' + (Vue.config.debug ? local : document.location.host) + '/socketServer'
+        this.webSocket = new WebSocket(url);
         this.webSocket.onopen = () => {
             store.commit(SET_SERVER_CONNECTED, true);
             console.log("✔WebSocket connected!");
@@ -68,7 +71,9 @@ export default class SocketServer {
                 }
                 if (obj.type === MessageType.USER_ACTIVE) {
                     msgObj.flag = MessageFlag.NOTIFICATION;
-                    msgObj.content = `${obj.message.sender.avatar}${(obj.message.content ? '已入伙' : '已叛逃')}`;
+                    msgObj.content = `
+                    ${obj.message.sender.avatar} ${obj.message.sender.hostAddress} ${(obj.message.content ? '已入伙' : '已叛逃')}
+                    `;
                 }
                 if (obj.type === MessageType.BINARY_NOTICE) {
                     msgObj.flag = MessageFlag.BINARY_PIC;

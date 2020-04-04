@@ -1,8 +1,10 @@
 <template>
     <div id="stage" ref="stage" class="auto-scroll">
+        <div class="wedge-top"></div>
         <div v-for="(item, index) in getMsgList" :key="index">
             <message-item :item="item"></message-item>
         </div>
+        <div class="wedge-bottom"></div>
     </div>
 </template>
 
@@ -37,5 +39,16 @@
 <style lang="scss" scoped>
     #stage {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        > .wedge-top {
+            flex: 1;
+            margin-top: 2em;
+        }
+
+        > .wedge-bottom {
+            margin-bottom: 2.5em;
+        }
     }
 </style>

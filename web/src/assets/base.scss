@@ -4,7 +4,9 @@ $color-white: #EFEFEF;
 $color-gray: #303030;
 $color-shallow-gray: #555555;
 
+$spacing-small: 0.1em;
 $spacing-normal: 0.3em;
+$spacing-big: 0.5em;
 
 //滚动条样式
 ::-webkit-scrollbar {
@@ -51,6 +53,15 @@ input, button, select, textarea {
   }
   100% {
     transform: translateZ(-100px) rotateX(360deg) rotateY(360deg);
+  }
+}
+
+@keyframes breath {
+  0% {
+    padding-top: $spacing-normal;
+  }
+  100% {
+    padding-top: $spacing-big;
   }
 }
 

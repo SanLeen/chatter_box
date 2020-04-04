@@ -2,7 +2,7 @@
     <div id="function-bar">
         <div class="avatar press-effect" @click="sendPicture">P</div>
         <form id="typewriter" action="javascript:return true">
-            <input type="text" v-model="writeContent" @keypress="typewriterPress">
+            <input type="text" autofocus="autofocus" v-model="writeContent" @keypress="typewriterPress">
         </form>
         <div class="avatar press-effect" @click="sendMessage">{{$store.state.userInfo.avatar}}</div>
     </div>
@@ -61,9 +61,16 @@
 
 <style lang="scss" scoped>
     #function-bar {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 999;
+        background: rgba(17, 17, 17, 0.5);
+        border-radius: 1em 1em 0 0;
+        backdrop-filter: saturate(180%) blur(20px);
         color: $color-black;
-        //background: $color-gray;
         display: flex;
+        padding: $spacing-normal 0;
 
         > #typewriter {
             flex: 1;
@@ -78,7 +85,6 @@
                 padding: $spacing-normal $spacing-normal 0 $spacing-normal;
                 background: transparent;
                 border: none;
-                margin-bottom: $spacing-normal;
                 border-bottom: 2px $color-yellow solid;
 
                 &:focus {
@@ -92,7 +98,8 @@
             height: $spacing-normal*7;
             border-radius: 50%;
             background: $color-yellow;
-            margin: $spacing-normal;
+            margin: 0 $spacing-normal;
+            font-weight: normal;
             display: flex;
             justify-content: center;
             align-items: center;

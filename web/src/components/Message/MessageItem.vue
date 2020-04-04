@@ -1,9 +1,9 @@
 <template>
     <message-body class="message-body" :time="item.time">
-        <view-message
+        <view-text
                 v-if="item.flag === messageFlag.MESSAGE || item.flag === messageFlag.BINARY_PIC"
                 :item="item">
-        </view-message>
+        </view-text>
         <view-notification
                 v-if="item.flag === messageFlag.NOTIFICATION">
             {{item.content}}
@@ -15,11 +15,11 @@
     import MessageFlag from "../../util/MessageFlag";
     import MessageBody from "./MessageBody";
     import ViewNotification from "./ViewNotification";
-    import ViewMessage from "./ViewMessage";
+    import ViewText from "./ViewText";
 
     export default {
         name: "MessageItem",
-        components: {ViewMessage, ViewNotification, MessageBody},
+        components: {ViewText, ViewNotification, MessageBody},
         props: {
             item: Object
         },

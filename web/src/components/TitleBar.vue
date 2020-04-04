@@ -17,7 +17,10 @@
 
 <style lang="scss" scoped>
     #title-bar {
+        @extend .copy-unable;
         position: absolute;
+        padding: $spacing-normal 0;
+        padding-top: 0;
         width: 100%;
         z-index: 999;
 
@@ -27,27 +30,25 @@
 
         > .state-dot {
             &.connected > .coin {
-                border-color: green;
+                background: $color-yellow;
+                animation: breath 1s ease-in-out infinite alternate;
             }
 
             &.disconnected > .coin {
-                border-color: red;
+                background: #f10031;
+                border-top-left-radius: 1em;
+                border-top-right-radius: 1em;
                 animation: spin 5s ease-in-out infinite;
             }
 
             > .coin {
+                transition: all 0.5s;
                 cursor: pointer;
-                @extend .copy-unable;
-                color: $color-shallow-gray;
-                background: rgba(17, 17, 17, 0.8);
-                margin-top: $spacing-normal;
-                width: $spacing-normal*5;
-                height: $spacing-normal*5;
-                border-radius: 50%;
-                border: 4px solid #3cefff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                color: $color-black;
+                font-weight: normal;
+                padding: $spacing-normal $spacing-big;
+                border-radius: 0 0 1em 1em;
+                backdrop-filter: saturate(180%) blur(20px);
             }
         }
     }
