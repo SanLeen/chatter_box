@@ -10,8 +10,8 @@
             <div class="message-stand" :style="{flexDirection:item.self?'row-reverse':'row'}">
                 <div v-if="item.flag === messageFlag.MESSAGE" class="text"
                      :class="{'self-text':item.self}"
+                     v-html="textFormat(item.content)"
                 >
-                    {{item.content}}
                 </div>
                 <div v-if="item.flag === messageFlag.BINARY_PIC">
                     <img v-if="item.loadDone" :src="item.binary">
@@ -35,6 +35,16 @@
         computed: {
             messageFlag: function () {
                 return MessageFlag;
+            },
+            textFormat: function () {
+                return s => {
+                    const regExp = /((ht|f)tps?:)\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
+                    s = s.replace(
+                        regExp,
+                        i => `<a href="${i}" target="_blank">${i}</a>`
+                    );
+                    return s;
+                };
             }
         },
     }
