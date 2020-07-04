@@ -1,9 +1,11 @@
 <template>
     <div id="function-bar">
         <div class="avatar press-effect" @click="sendPicture">P</div>
-        <form id="typewriter" action="javascript:return true">
-            <input type="text" autofocus="autofocus" v-model="writeContent" @keypress="typewriterPress">
-        </form>
+        <div id="typewriter">
+            <input autofocus="autofocus"
+                   v-model="writeContent"
+                   @keypress.enter.exact="sendMessage">
+        </div>
         <div class="avatar press-effect" @click="sendMessage">{{$store.state.userInfo.avatar}}</div>
     </div>
 </template>
@@ -17,11 +19,9 @@
             }
         },
         methods: {
-            typewriterPress($event) {
-                if ($event.key === 'Enter') {
-                    this.sendMessage();
-                }
-                return true;
+            insertEnter() { // 插入换行
+                this.writeContent += '\n';
+                console.log('✅', this.writeContent);
             },
             sendMessage() {
                 if (!this.$socketServer.isState(WebSocket.OPEN)) {
@@ -86,8 +86,10 @@
                 background: transparent;
                 border: none;
                 border-bottom: 2px $color-yellow solid;
+                transition: border-bottom-width 200ms;
 
                 &:focus {
+                    border-bottom-width: 3px
                 }
             }
         }

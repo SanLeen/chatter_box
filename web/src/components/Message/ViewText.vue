@@ -11,6 +11,7 @@
                 <div v-if="item.flag === messageFlag.MESSAGE" class="text"
                      :class="{'self-text':item.self}"
                      v-html="textFormat(item.content)"
+                     @click="readText"
                 >
                 </div>
                 <div v-if="item.flag === messageFlag.BINARY_PIC">
@@ -45,7 +46,14 @@
                     );
                     return s;
                 };
-            }
+            },
+        },
+        methods: {
+            readText() { // 将文本读出来
+                window.speechSynthesis.speak(
+                    new SpeechSynthesisUtterance(this.item.content)
+                );
+            },
         },
     }
 </script>

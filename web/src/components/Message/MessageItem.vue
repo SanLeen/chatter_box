@@ -26,7 +26,7 @@
         computed: {
             messageFlag: function () {
                 return MessageFlag;
-            }
+            },
         },
     }
 </script>
