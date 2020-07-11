@@ -4,14 +4,14 @@
         <div class="avatar" :class="{'flip-horizontal':!item.self}">{{item.avatar}}</div>
         <div class="divider"></div>
         <div class="content">
-            <div class="host-address" :style="{textAlign:item.self?'right':'left'}">
+            <div class="host-address" :style="{textAlign:item.self?'right':'left'}"
+                 @click="readContent()">
                 {{item.hostAddress}}
             </div>
             <div class="message-stand" :style="{flexDirection:item.self?'row-reverse':'row'}">
                 <div v-if="item.flag === messageFlag.MESSAGE" class="text"
                      :class="{'self-text':item.self}"
                      v-html="textFormat(item.content)"
-                     @click="readText"
                 >
                 </div>
                 <div v-if="item.flag === messageFlag.BINARY_PIC">
@@ -27,6 +27,8 @@
 
 <script>
     import MessageFlag from "../../util/MessageFlag";
+    import {HttpRegExp} from "../../configs/consts";
+    import {readText} from "../../util/Text2Speech";
 
     export default {
         name: "ViewText",
@@ -39,9 +41,8 @@
             },
             textFormat: function () {
                 return s => {
-                    const regExp = /((ht|f)tps?:)\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
                     s = s.replace(
-                        regExp,
+                        HttpRegExp,
                         i => `<a href="${i}" target="_blank">${i}</a>`
                     );
                     return s;
@@ -49,10 +50,12 @@
             },
         },
         methods: {
-            readText() { // 将文本读出来
-                window.speechSynthesis.speak(
-                    new SpeechSynthesisUtterance(this.item.content)
-                );
+            readContent() {
+                if (this.item.flag === MessageFlag.MESSAGE) {
+                    readText(this.item.content);
+                } else if (this.item.flag === MessageFlag.BINARY_PIC) {
+                    readText("一张图片");
+                }
             },
         },
     }
@@ -85,6 +88,7 @@
 
             > .host-address {
                 font-size: 0.8em;
+                cursor: pointer;
             }
 
             > .message-stand {
