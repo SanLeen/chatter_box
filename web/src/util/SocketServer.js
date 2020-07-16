@@ -22,8 +22,12 @@ export default class SocketServer {
      * 初始化WebSocket服务
      */
     initWebSocket() {
+        let protocol = 'ws://';
+        if (location.protocol === "https:"){
+            protocol = 'wss://';
+        }
         const local = document.location.hostname + ':8080';
-        const url = 'ws://' + (Vue.config.debug ? local : document.location.host) + '/socketServer'
+        const url = protocol + (Vue.config.debug ? local : document.location.host) + '/socketServer'
         this.webSocket = new WebSocket(url);
         this.webSocket.onopen = () => {
             store.commit(SET_SERVER_CONNECTED, true);
