@@ -4,18 +4,17 @@
         <div class="avatar" :class="{'flip-horizontal':!item.self}">{{item.avatar}}</div>
         <div class="divider"></div>
         <div class="content">
-            <div class="host-address" :style="{textAlign:item.self?'right':'left'}"
-                 @click="readContent()">
-                {{item.hostAddress}}
+            <div class="host-address" :style="{textAlign:item.self?'right':'left'}">
+                <span @click="readContent()">{{item.hostAddress}}</span>
             </div>
             <div class="message-stand" :style="{flexDirection:item.self?'row-reverse':'row'}">
                 <div v-if="item.flag === messageFlag.MESSAGE" class="text"
                      :class="{'self-text':item.self}"
-                     v-html="textFormat(item.content)"
-                >
+                     v-html="textFormat(item.content)">
                 </div>
                 <div v-if="item.flag === messageFlag.BINARY_PIC">
-                    <img v-if="item.loadDone" :src="item.binary">
+                    <img preview="0" v-if="item.loadDone" :src="item.binary"
+                         @load="handleImageLoad()">
                     <div v-else class="binary-loading"></div>
                 </div>
             </div>
@@ -57,6 +56,9 @@
                     readText("一张图片");
                 }
             },
+            handleImageLoad() { // 图片加载结束
+                this.$previewRefresh(); // 图片预览刷新
+            }
         },
     }
 </script>
@@ -88,7 +90,10 @@
 
             > .host-address {
                 font-size: 0.8em;
-                cursor: pointer;
+
+                > span {
+                    cursor: pointer;
+                }
             }
 
             > .message-stand {
@@ -111,8 +116,13 @@
                 }
 
                 img {
+                    min-height: $spacing-normal*4;
                     max-height: 300px;
-                    max-width: 150px;
+                    max-width: 100%;
+                    object-fit: cover;
+                    object-position: left top;
+                    border-radius: 4px;
+                    box-sizing: border-box;
                 }
 
                 .binary-loading {

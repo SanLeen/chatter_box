@@ -21,10 +21,7 @@
         },
         watch: {
             getMsgList: function () {
-                setTimeout(
-                    () => this.scrollIntoBottom(),
-                    100
-                );
+                this.$nextTick(() => this.scrollIntoBottom());
             }
         },
         methods: {
