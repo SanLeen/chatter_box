@@ -1,9 +1,6 @@
 # Chatter Box
 
-[PREVIEW ONLINE](http://chat.leenwong.cn "chat.leenwong.cn")
-
 ![](PREVIEW.gif)
-
 
 ## 简介
 
